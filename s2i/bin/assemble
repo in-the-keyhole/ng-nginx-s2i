@@ -1,0 +1,27 @@
+#!/bin/bash -e
+#
+# S2I assemble script for the 'ng-nginx-s2i' image.
+# The 'assemble' script builds your application source so that it is ready to run.
+#
+# For more information refer to the documentation:
+#	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+if [[ "$1" == "-h" ]]; then
+	# If the 'ng-nginx-s2i' assemble script is executed with '-h' flag,
+	# print the usage.
+	exec /usr/libexec/s2i/usage
+fi
+
+pushd /tmp/src
+
+echo "---> Running npm install..."
+npm install
+npm install --only=dev
+
+echo "---> Running ng build"
+npm run build
+
+popd
+
+mv /tmp/src/dist/* /usr/share/nginx/html/

@@ -1,0 +1,13 @@
+#!/bin/bash -e
+cat <<EOF
+This is the ng-nginx-s2i image:
+To use it, install S2I: https://github.com/openshift/source-to-image
+
+Sample invocation:
+
+s2i build test/test-app ng-nginx-s2i ng-nginx-s2i-app
+
+You can then run the resulting image via:
+docker run -d -p 8080:8080 ng-nginx-s2i-app
+and see the test via http://localhost:8080
+EOF
